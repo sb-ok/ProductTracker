@@ -92,5 +92,25 @@ namespace ProductTracker.Forms
             }
 
         }
+
+        private void delProdButton_Click(object sender, EventArgs e)
+        {
+            var delTarget = treeOfProduct.SelectedNode;
+
+            using (var context = new ProductTrackerEntities())
+            {
+                try
+                {
+                    var delProd = context.product.First(product => product.name.Equals(delTarget.Text));
+                    context.product.Remove(delProd);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+
+            treeOfProduct.Nodes.Remove(delTarget);
+        }
     }
 }

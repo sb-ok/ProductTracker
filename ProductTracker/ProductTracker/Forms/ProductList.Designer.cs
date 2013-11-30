@@ -86,6 +86,7 @@
             this.delProdButton.Size = new System.Drawing.Size(23, 19);
             this.delProdButton.Text = "toolStripButton2";
             this.delProdButton.Visible = false;
+            this.delProdButton.Click += new System.EventHandler(this.delProdButton_Click);
             // 
             // treeOfProduct
             // 
