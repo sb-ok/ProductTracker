@@ -1,0 +1,30 @@
+CREATE TABLE mtAttribute (
+id INT PRIMARY KEY NOT NULL,
+name VARCHAR(100) NOT NULL 
+)
+
+CREATE TABLE productType(
+typeID INT PRIMARY KEY NOT NULL,
+typeName VARCHAR(100) NOT NULL
+)
+
+CREATE TABLE product(
+id INT PRIMARY KEY NOT NULL,
+typeID INT FOREIGN KEY REFERENCES productType (typeID) NOT NULL,
+name VARCHAR(100) NOT NULL,
+number INT NOT NULL
+)  
+
+CREATE TABLE productTree (
+productID INT FOREIGN KEY REFERENCES product(id) NOT NULL,
+parentID INT NULL,
+childID INT NULL,
+inWork INT NULL,
+activeWorker VARCHAR(100) NULL
+)
+
+CREATE TABLE productAttribute(
+productID INT FOREIGN KEY REFERENCES product(id) NOT NULL,
+attributeID INT FOREIGN KEY REFERENCES mtAttribute(id) NOT NULL,
+value VARCHAR(200) NOT NULL 
+)

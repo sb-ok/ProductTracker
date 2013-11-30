@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a2b095ca51ab4188a1740f538d4a34d1" Name="Diagram1">
+        <EntityTypeShape EntityType="ProductTrackerModel.mtAttribute" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProductTrackerModel.product" Width="1.5" PointX="3" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProductTrackerModel.productType" Width="1.5" PointX="0.75" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProductTrackerModel.UserRole" Width="1.5" PointX="7.75" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProductTrackerModel.Users" Width="1.5" PointX="10" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProductTrackerModel.productAttribute" Width="1.5" PointX="5.25" PointY="2.5" IsExpanded="true" />
+        <AssociationConnector Association="ProductTrackerModel.FK__productAt__attri__145C0A3F" ManuallyRouted="false" />
+        <AssociationConnector Association="ProductTrackerModel.FK__product__typeID__0F975522" ManuallyRouted="false" />
+        <AssociationConnector Association="ProductTrackerModel.FK__productAt__produ__1367E606" ManuallyRouted="false" />
+        <AssociationConnector Association="ProductTrackerModel.FK__Users__roleId__267ABA7A" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ProductTrackerModel.productTree" Width="1.5" PointX="5.25" PointY="5.5" />
+        <AssociationConnector Association="ProductTrackerModel.FK__productTr__produ__117F9D94" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

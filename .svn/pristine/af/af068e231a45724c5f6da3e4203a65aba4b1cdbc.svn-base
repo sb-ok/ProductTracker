@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ProductTrackerModelStoreContainer" CdmEntityContainer="ProductTrackerEntities">
+    <EntitySetMapping Name="mtAttribute">
+      <EntityTypeMapping TypeName="ProductTrackerModel.mtAttribute">
+        <MappingFragment StoreEntitySet="mtAttribute">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="product">
+      <EntityTypeMapping TypeName="ProductTrackerModel.product">
+        <MappingFragment StoreEntitySet="product">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="typeID" ColumnName="typeID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="productType">
+      <EntityTypeMapping TypeName="ProductTrackerModel.productType">
+        <MappingFragment StoreEntitySet="productType">
+          <ScalarProperty Name="typeID" ColumnName="typeID" />
+          <ScalarProperty Name="typeName" ColumnName="typeName" />
+          <ScalarProperty Name="rootType" ColumnName="rootType" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserRole">
+      <EntityTypeMapping TypeName="ProductTrackerModel.UserRole">
+        <MappingFragment StoreEntitySet="UserRole">
+          <ScalarProperty Name="roleId" ColumnName="roleId" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="ProductTrackerModel.Users">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="userID" ColumnName="userID" />
+          <ScalarProperty Name="login" ColumnName="login" />
+          <ScalarProperty Name="psw" ColumnName="psw" />
+          <ScalarProperty Name="fio" ColumnName="fio" />
+          <ScalarProperty Name="roleId" ColumnName="roleId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="productAttribute">
+      <EntityTypeMapping TypeName="ProductTrackerModel.productAttribute">
+        <MappingFragment StoreEntitySet="productAttribute">
+          <ScalarProperty Name="productID" ColumnName="productID" />
+          <ScalarProperty Name="attributeID" ColumnName="attributeID" />
+          <ScalarProperty Name="value" ColumnName="value" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="productTree">
+      <EntityTypeMapping TypeName="ProductTrackerModel.productTree">
+        <MappingFragment StoreEntitySet="productTree">
+          <ScalarProperty Name="productID" ColumnName="productID" />
+          <ScalarProperty Name="parentID" ColumnName="parentID" />
+          <ScalarProperty Name="inWork" ColumnName="inWork" />
+          <ScalarProperty Name="activeWorker" ColumnName="activeWorker" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

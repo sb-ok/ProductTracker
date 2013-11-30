@@ -1,0 +1,419 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ProductTrackerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="mtAttribute">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="product">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="typeID" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ProductTracker.dbo.productAttribute' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="productAttribute">
+          <Key>
+            <PropertyRef Name="productID" />
+            <PropertyRef Name="attributeID" />
+            <PropertyRef Name="value" />
+          </Key>
+          <Property Name="productID" Type="int" Nullable="false" />
+          <Property Name="attributeID" Type="int" Nullable="false" />
+          <Property Name="value" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="productTree">
+          <Key>
+            <PropertyRef Name="productID" />
+          </Key>
+          <Property Name="productID" Type="int" Nullable="false" />
+          <Property Name="parentID" Type="int" />
+          <Property Name="inWork" Type="int" />
+          <Property Name="activeWorker" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="productType">
+          <Key>
+            <PropertyRef Name="typeID" />
+          </Key>
+          <Property Name="typeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="typeName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="rootType" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="roleId" />
+          </Key>
+          <Property Name="roleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="userID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="login" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="psw" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="fio" Type="varchar" MaxLength="150" />
+          <Property Name="roleId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__product__typeID__0F975522">
+          <End Role="productType" Type="Self.productType" Multiplicity="1" />
+          <End Role="product" Type="Self.product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="productType">
+              <PropertyRef Name="typeID" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="typeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__productAt__attri__145C0A3F">
+          <End Role="mtAttribute" Type="Self.mtAttribute" Multiplicity="1" />
+          <End Role="productAttribute" Type="Self.productAttribute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mtAttribute">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="productAttribute">
+              <PropertyRef Name="attributeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__productAt__produ__1367E606">
+          <End Role="product" Type="Self.product" Multiplicity="1" />
+          <End Role="productAttribute" Type="Self.productAttribute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="productAttribute">
+              <PropertyRef Name="productID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__productTr__produ__117F9D94">
+          <End Role="product" Type="Self.product" Multiplicity="1" />
+          <End Role="productTree" Type="Self.productTree" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="productTree">
+              <PropertyRef Name="productID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Users__roleId__267ABA7A">
+          <End Role="UserRole" Type="Self.UserRole" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRole">
+              <PropertyRef Name="roleId" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="roleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProductTrackerModelStoreContainer">
+          <EntitySet Name="mtAttribute" EntityType="Self.mtAttribute" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="product" EntityType="Self.product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="productTree" EntityType="Self.productTree" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="productType" EntityType="Self.productType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="productAttribute" EntityType="Self.productAttribute" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[productAttribute].[productID] AS [productID], 
+[productAttribute].[attributeID] AS [attributeID], 
+[productAttribute].[value] AS [value]
+FROM [dbo].[productAttribute] AS [productAttribute]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__product__typeID__0F975522" Association="Self.FK__product__typeID__0F975522">
+            <End Role="productType" EntitySet="productType" />
+            <End Role="product" EntitySet="product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__productAt__attri__145C0A3F" Association="Self.FK__productAt__attri__145C0A3F">
+            <End Role="mtAttribute" EntitySet="mtAttribute" />
+            <End Role="productAttribute" EntitySet="productAttribute" />
+          </AssociationSet>
+          <AssociationSet Name="FK__productAt__produ__1367E606" Association="Self.FK__productAt__produ__1367E606">
+            <End Role="product" EntitySet="product" />
+            <End Role="productAttribute" EntitySet="productAttribute" />
+          </AssociationSet>
+          <AssociationSet Name="FK__productTr__produ__117F9D94" Association="Self.FK__productTr__produ__117F9D94">
+            <End Role="product" EntitySet="product" />
+            <End Role="productTree" EntitySet="productTree" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Users__roleId__267ABA7A" Association="Self.FK__Users__roleId__267ABA7A">
+            <End Role="UserRole" EntitySet="UserRole" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ProductTrackerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="mtAttribute">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="productAttribute" Relationship="Self.FK__productAt__attri__145C0A3F" FromRole="mtAttribute" ToRole="productAttribute" />
+        </EntityType>
+        <EntityType Name="product">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="typeID" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="productType" Relationship="Self.FK__product__typeID__0F975522" FromRole="product" ToRole="productType" />
+          <NavigationProperty Name="productAttribute" Relationship="Self.FK__productAt__produ__1367E606" FromRole="product" ToRole="productAttribute" />
+          <NavigationProperty Name="productTree" Relationship="Self.FK__productTr__produ__117F9D94" FromRole="product" ToRole="productTree" />
+        </EntityType>
+        <EntityType Name="productType">
+          <Key>
+            <PropertyRef Name="typeID" />
+          </Key>
+          <Property Name="typeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="typeName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="rootType" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="product" Relationship="Self.FK__product__typeID__0F975522" FromRole="productType" ToRole="product" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="roleId" />
+          </Key>
+          <Property Name="roleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Users__roleId__267ABA7A" FromRole="UserRole" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="userID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="login" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="psw" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fio" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="roleId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="UserRole" Relationship="Self.FK__Users__roleId__267ABA7A" FromRole="Users" ToRole="UserRole" />
+        </EntityType>
+        <EntityType Name="productAttribute">
+          <Key>
+            <PropertyRef Name="attributeID" />
+            <PropertyRef Name="value" />
+            <PropertyRef Name="productID" />
+          </Key>
+          <Property Name="productID" Type="Int32" Nullable="false" />
+          <Property Name="attributeID" Type="Int32" Nullable="false" />
+          <Property Name="value" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="mtAttribute" Relationship="Self.FK__productAt__attri__145C0A3F" FromRole="productAttribute" ToRole="mtAttribute" />
+          <NavigationProperty Name="product" Relationship="Self.FK__productAt__produ__1367E606" FromRole="productAttribute" ToRole="product" />
+        </EntityType>
+        <EntityType Name="productTree">
+          <Key>
+            <PropertyRef Name="productID" />
+          </Key>
+          <Property Name="productID" Type="Int32" Nullable="false" />
+          <Property Name="parentID" Type="Int32" />
+          <Property Name="inWork" Type="Int32" />
+          <Property Name="activeWorker" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="product" Relationship="Self.FK__productTr__produ__117F9D94" FromRole="productTree" ToRole="product" />
+        </EntityType>
+        <Association Name="FK__productAt__attri__145C0A3F">
+          <End Role="mtAttribute" Type="Self.mtAttribute" Multiplicity="1" />
+          <End Role="productAttribute" Type="Self.productAttribute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mtAttribute">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="productAttribute">
+              <PropertyRef Name="attributeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__product__typeID__0F975522">
+          <End Role="productType" Type="Self.productType" Multiplicity="1" />
+          <End Role="product" Type="Self.product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="productType">
+              <PropertyRef Name="typeID" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="typeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__productAt__produ__1367E606">
+          <End Role="product" Type="Self.product" Multiplicity="1" />
+          <End Role="productAttribute" Type="Self.productAttribute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="productAttribute">
+              <PropertyRef Name="productID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__productTr__produ__117F9D94">
+          <End Role="product" Type="Self.product" Multiplicity="1" />
+          <End Role="productTree" Type="Self.productTree" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="productTree">
+              <PropertyRef Name="productID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Users__roleId__267ABA7A">
+          <End Role="UserRole" Type="Self.UserRole" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRole">
+              <PropertyRef Name="roleId" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="roleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProductTrackerEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="mtAttribute" EntityType="Self.mtAttribute" />
+          <EntitySet Name="product" EntityType="Self.product" />
+          <EntitySet Name="productType" EntityType="Self.productType" />
+          <EntitySet Name="UserRole" EntityType="Self.UserRole" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <EntitySet Name="productAttribute" EntityType="Self.productAttribute" />
+          <EntitySet Name="productTree" EntityType="Self.productTree" />
+          <AssociationSet Name="FK__productAt__attri__145C0A3F" Association="Self.FK__productAt__attri__145C0A3F">
+            <End Role="mtAttribute" EntitySet="mtAttribute" />
+            <End Role="productAttribute" EntitySet="productAttribute" />
+          </AssociationSet>
+          <AssociationSet Name="FK__product__typeID__0F975522" Association="Self.FK__product__typeID__0F975522">
+            <End Role="productType" EntitySet="productType" />
+            <End Role="product" EntitySet="product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__productAt__produ__1367E606" Association="Self.FK__productAt__produ__1367E606">
+            <End Role="product" EntitySet="product" />
+            <End Role="productAttribute" EntitySet="productAttribute" />
+          </AssociationSet>
+          <AssociationSet Name="FK__productTr__produ__117F9D94" Association="Self.FK__productTr__produ__117F9D94">
+            <End Role="product" EntitySet="product" />
+            <End Role="productTree" EntitySet="productTree" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Users__roleId__267ABA7A" Association="Self.FK__Users__roleId__267ABA7A">
+            <End Role="UserRole" EntitySet="UserRole" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ProductTrackerModelStoreContainer" CdmEntityContainer="ProductTrackerEntities">
+          <EntitySetMapping Name="mtAttribute">
+            <EntityTypeMapping TypeName="ProductTrackerModel.mtAttribute">
+              <MappingFragment StoreEntitySet="mtAttribute">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="product">
+            <EntityTypeMapping TypeName="ProductTrackerModel.product">
+              <MappingFragment StoreEntitySet="product">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="typeID" ColumnName="typeID" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="productType">
+            <EntityTypeMapping TypeName="ProductTrackerModel.productType">
+              <MappingFragment StoreEntitySet="productType">
+                <ScalarProperty Name="typeID" ColumnName="typeID" />
+                <ScalarProperty Name="typeName" ColumnName="typeName" />
+                <ScalarProperty Name="rootType" ColumnName="rootType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRole">
+            <EntityTypeMapping TypeName="ProductTrackerModel.UserRole">
+              <MappingFragment StoreEntitySet="UserRole">
+                <ScalarProperty Name="roleId" ColumnName="roleId" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="ProductTrackerModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="psw" ColumnName="psw" />
+                <ScalarProperty Name="fio" ColumnName="fio" />
+                <ScalarProperty Name="roleId" ColumnName="roleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="productAttribute">
+            <EntityTypeMapping TypeName="ProductTrackerModel.productAttribute">
+              <MappingFragment StoreEntitySet="productAttribute">
+                <ScalarProperty Name="productID" ColumnName="productID" />
+                <ScalarProperty Name="attributeID" ColumnName="attributeID" />
+                <ScalarProperty Name="value" ColumnName="value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="productTree">
+            <EntityTypeMapping TypeName="ProductTrackerModel.productTree">
+              <MappingFragment StoreEntitySet="productTree">
+                <ScalarProperty Name="productID" ColumnName="productID" />
+                <ScalarProperty Name="parentID" ColumnName="parentID" />
+                <ScalarProperty Name="inWork" ColumnName="inWork" />
+                <ScalarProperty Name="activeWorker" ColumnName="activeWorker" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

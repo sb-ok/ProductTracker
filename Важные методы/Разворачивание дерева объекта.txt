@@ -1,0 +1,22 @@
+public void ExpandProductTree(int productId, string productName)
+        {
+            specTree.Nodes.Clear();
+            var mainNode = new TreeNode(productName);
+            mainNode = AddNodeChild(mainNode, productId);
+            specTree.Nodes.Add(mainNode);
+        }
+
+        public TreeNode AddNodeChild(TreeNode parentNode, int parentId)
+        {
+            var childList = from child in db.productTree
+                            where child.parentID == parentId
+                            select child.product;
+
+            foreach (var child in childList)
+            {
+                var childNode = new TreeNode(child.name);
+                childNode = AddNodeChild(childNode, child.id);
+                parentNode.Nodes.Add(childNode);
+            }
+            return parentNode;
+        }
